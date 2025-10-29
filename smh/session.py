@@ -24,6 +24,8 @@ from copy import deepcopy
 import warnings
 
 import astropy.table
+from astropy.table import Table,join
+import astropy.units as u
 from astropy.io import ascii
 from .linelists import LineList
 from .utils import mkdtemp
@@ -71,12 +73,18 @@ class Session(BaseSession):
         # Load the spectra and flatten all orders into a single list.
         input_spectra = []
         for path in spectrum_paths:
-            s = specutils.Spectrum1D.read(path)
+            try:
+                s = specutils.Spectrum1D.read(path)
+
+            except ValueError:
+                table_data = np.array(Table.read(path))
+                s = specutils.Spectrum1D(table_data['wavelength'] *u.Angstrom, table_data['flux'] * u.dimensionless_unscaled, table_data['uncertainty'])
+
             if isinstance(s, list):
                 input_spectra.extend(s)
             else:
                 input_spectra.append(s)
-        
+
         # Sort orders from blue to red.
         input_spectra.sort(key=lambda order: order.dispersion.mean())
 

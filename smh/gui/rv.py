@@ -18,6 +18,7 @@ from matplotlib import (gridspec, pyplot as plt)
 from smh import (Session, specutils)
 import smh
 from smh.linelists import LineList
+import re
 
 import logging
 logger = logging.getLogger(__name__)
@@ -756,8 +757,8 @@ class RVTab(QtGui.QWidget):
         self.ax_ccf.lines[0].set_data([v, ccf])
 
         rv_measured = self.parent.session.metadata["rv"]["rv_measured"]
-        
-        self.ax_ccf.set_xlim(rv_measured - 1000, rv_measured + 1000)
+
+        self.ax_ccf.set_xlim(float(rv_measured) - 1000, float(rv_measured) + 1000)
         self.ax_ccf.set_ylim(0, 1.2)
 
         self.ax_ccf.axvline(rv_measured, c='r')

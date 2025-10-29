@@ -1,0 +1,246 @@
+balmer_line_fitting:
+  balmer_line_index: 1
+  masks:
+  - [3184.753, 4821.814]
+  - [4876.974, 4907.252]
+  - [4814.738, 4842.660]
+  - [4865.319, 4865.736]
+  - [4865.914, 4866.568]
+  - [4870.968, 4871.622]
+  - [4871.800, 4872.573]
+  - [4854.616, 4854.973]
+  - [4855.271, 4855.568]
+  - [4855.211, 4855.330]
+  - [4848.849, 4849.384]
+  - [4860.995, 4861.572]
+  - [4859.474, 4859.814]
+  - [4873.706, 4877.657]
+  - [4844.844, 4851.540]
+  - [4859.642, 4859.932]
+  - [4860.841, 4861.836]
+  - [4860.825, 4860.911]
+  - [4860.590, 4862.064]
+  - [6593.809, 9192.527]
+  - [4893.862, 6524.569]
+  - [6544.543, 6545.293]
+  - [6545.917, 6546.792]
+  - [6549.165, 6550.414]
+  - [6553.038, 6554.537]
+  - [6534.675, 6536.423]
+  - [6533.176, 6533.800]
+  - [6543.294, 6544.043]
+  - [6572.775, 6573.399]
+  - [6575.273, 6576.647]
+  - [6573.649, 6575.648]
+  - [6587.016, 6588.889]
+  - [6592.012, 6594.761]
+  - [6565.030, 6565.654]
+  - [6558.909, 6559.783]
+  - [6557.410, 6558.409]
+  - [6561.858, 6563.735]
+  metadata:
+    bounds: {}
+    continuum: true
+    continuum_order: 3
+    redshift: true
+    smoothing: false
+  spectrum_index: 0
+rv:
+  wavelength_regions:
+    - [8450, 8750]
+    - [5100, 5200]
+    - [5150, 5200]
+    - [5300, 5350]
+    - [5350, 5400]
+    - [6000, 6100]
+    - [6510, 6610]
+    - [4810, 4910]
+    - [4290, 4390]
+  resample: template
+  apodize: 0
+  normalization:
+    knot_spacing: 10
+    low_sigma_clip: 1.0
+    high_sigma_clip: 0.2
+    max_iterations: 5
+    order: 5
+    exclude: null
+    include: null
+    function: spline 
+    scale: 1.0
+normalization:
+  function: spline
+  order: 5
+  max_iterations: 5
+  low_sigma_clip: 1.0
+  high_sigma_clip: 0.2
+  knot_spacing: 100
+  blue_trim: 20
+  red_trim: 20
+  default_mask: default 
+  masks:
+    default:
+      #rest_wavelength:
+      obs_wavelength:
+        - [7593, 7618] # Part of the telluric A-band
+      #pixel:
+isotopes:
+  Sr:
+    86: 0.0
+    87: 0.0
+    88: 1.0
+  Y: 
+    89: 1.0
+  Zr:
+    90: 0.485
+    91: 0.020
+    92: 0.265
+    94: 0.083
+    96: 0.147
+  Ba:
+    136: 0.0
+    137: 0.351
+    138: 0.279
+    134: 0.0
+    135: 0.370
+  La:
+    139: 0.0
+  Ce:
+    140: 0.436
+    142: 0.564 
+  Eu:
+    151: 0.4781
+    153: 0.5219
+  Nd:
+    142: 0.27044
+    143: 0.12023
+    144: 0.23729
+    145: 0.08763
+    146: 0.17130
+    148: 0.05716
+    149: 0.05596
+  Sm: 
+    147: 0.178
+    148: 0.0
+    149: 0.178
+    150: 0.0
+    152: 0.305
+    154: 0.339
+  Dy:
+    160: 0.0
+    161: 0.208
+    162: 0.281
+    163: 0.258
+    164: 0.253
+
+spectral_model_quality_constraints:
+  # These constraints apply to all models.
+  #wavelength: [None, None]
+  abundance: [-10, 10] # log_epsilon abundance
+  abundance_uncertainty: [0, 1]
+
+  # These constraints only apply to profile models.
+  equivalent_width: [1, 1000] # milliAngstroms
+  equivalent_width_uncertainty: [0, 1000] # milliAngstroms
+  equivalent_width_percentage_uncertainty: [0, 25] # percent
+  reduced_equivalent_width: [-10, -3]
+
+  # This constraint will apply to profile models and spectral synthesis models 
+  # with a single element to fit, and just one transition of that element in its
+  # line list.
+  #excitation_potential: [None, None]
+  #loggf: [None, None]
+  #wavelength: [None, None]
+
+stellar_parameter_inference:
+  use_abundance_uncertainties_in_line_fits: true
+
+summary:
+  top_axis:
+    star_x: teff
+    star_y: logg
+    star_z: metallicity
+    x_label: Teff
+    y_label: logg
+    comparisons:
+      - isochrone_label:
+        sample_path: filename.csv
+        sample_format: csv
+        x_column: 3
+        y_column: 4
+        #z_column: 6
+      - literature_label:    
+        sample_path: yong.fits
+        x_column: TEFF
+        y_column: XI
+        #z_column: 6
+  bottom:
+    star_x: teff
+    star_y: logg
+    comparisons:
+      - literature_label:    
+        sample_path: yong.fits
+        x_column: TEFF
+        y_column: XI
+        #z_column: 6
+
+zoom_shortcuts:
+  1: [0.0, 1.2]
+  2: [0.5, 1.1]
+  3: [0.8, 1.05]
+  4: [0.9, 1.05]
+
+summary_figure:
+  spectra_filenames:
+    - [he1523-0901, 4630, 4370]
+    - [cd-38_245, -1, -1]
+    - [cs22892-52, 4800, 4620]
+    - [g64-12, 6450, 6430]
+    - [hd122563, 4600, 4350]
+    - [hd140283, 5650, 5550]
+  top_left:
+    label: H-beta
+    wavelength_range: [4858.33, 4864.33]
+    ylim: [0, 1.2]
+    spectra_to_plot:
+      - hd122563
+      - he1523-0901
+      - cs22892-52
+      - hd140283
+      - g64-12
+  top_right:
+    label: H-alpha
+    wavelength_range: [6559.8, 6565.8]
+    ylim: [0, 1.2]
+    spectra_to_plot:
+      - hd122563
+      - he1523-0901
+      - cs22892-52
+      - hd140283
+      - g64-12
+  middle:
+    label: Mg
+    wavelength_range: [5163, 5187]
+    ylim: [0.2, 1.4]
+    spectra_to_plot:
+      - cd-38_245
+      - cs22892-52
+  bottom_left:
+    label: CH
+    wavelength_range: [4305, 4317]
+    ylim: [0.0, 1.5]
+    spectra_to_plot:
+      - cs22892-52
+  bottom_right:
+    label: Eu
+    wavelength_range: [4127, 4131]
+    ylim: [0.0, 1.4]
+    spectra_to_plot:
+      - he1523-0901
+plot_styles:
+  spectrum_drawstyle: steps-mid
+covariance_draws: 100
+error_percentiles: [16, 84]
+show_full_profiles: 0
+full_synth_resolution: 0
+bring_to_top_after_fit: 0
