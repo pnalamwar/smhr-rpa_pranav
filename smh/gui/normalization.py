@@ -374,7 +374,8 @@ class NormalizationTab(QtGui.QWidget):
 
         # TODO: Make (0, 1.2) a default view setting.
         self.ax_order_norm.tick_params(axis='x', labelbottom=True)
-        self.ax_order_norm.set_ylim(0, 1.2)
+        #self.ax_order_norm.set_ylim(0, 1.2)
+        self.ax_order_norm.set_ylim(0, 1.6)
         self.ax_order_norm.set_yticks([0, 0.5, 1.0])
         self.ax_order_norm.set_xlabel(u"Wavelength (Å)")
 

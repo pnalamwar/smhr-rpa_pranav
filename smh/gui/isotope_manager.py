@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
-""" The radial velocity tab view for the Spectroscopy Made Hard GUI. """
+""" The isotope manager tab view for the Spectroscopy Made Hard GUI. """
 
 from __future__ import (division, print_function, absolute_import,
                         unicode_literals)

@@ -168,7 +168,8 @@ class SpectralModelsWidget(QtGui.QWidget):
         self.mpl_axis.fill_between([], [], [], facecolor="k", alpha=0.5,
             edgecolor=None, zorder=1)
 
-        self.mpl_axis.set_ylim(0, 1.2)
+        #self.mpl_axis.set_ylim(0, 1.2)
+        self.mpl_axis.set_ylim(0, 1.6)
         self.mpl_axis.set_xlabel(r"Wavelength (${\rm \AA}$)")
         self.mpl_axis.set_ylabel(r"Normalized flux")
         self.mpl_figure.draw()

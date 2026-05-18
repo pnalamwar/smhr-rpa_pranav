@@ -113,7 +113,7 @@ class SMHSpecDisplay(mpl.MPLWidget):
                  get_selected_model=None,
                  enable_zoom=True, enable_masks=False,
                  enable_model_modifications=False,
-                 label_ymin=1.0, label_ymax=1.2,
+                 label_ymin=1.0, label_ymax=1.6,
                  callbacks_after_fit=[],
                  comparison_spectrum=None,
                  **kwargs):
@@ -157,7 +157,8 @@ class SMHSpecDisplay(mpl.MPLWidget):
         #self.ax_spectrum.xaxis.set_major_locator(MaxNLocator(5))
         self.ax_spectrum.set_xlabel(u"Wavelength (Å)")
         self.ax_spectrum.set_ylabel(r"Normalized flux")
-        self.ax_spectrum.set_ylim(0, 1.2)
+        #self.ax_spectrum.set_ylim(0, 1.2)
+        self.ax_spectrum.set_ylim(0, 1.6)
         self.ax_spectrum.yaxis.set_major_locator(MultipleLocator(0.2))
         self.ax_spectrum.yaxis.set_minor_locator(MultipleLocator(0.02))
         #self.ax_spectrum.set_yticks([0, 0.5, 1])
@@ -367,8 +368,9 @@ class SMHSpecDisplay(mpl.MPLWidget):
         if event.key not in "1234": return None
         if self.session is None: return None
         ylim = self.session.setting(["zoom_shortcuts",int(event.key)],
-                                    default_return_value=[0.0,1.2])
+                                    default_return_value=[0.0,1.6])
         self.ax_spectrum.set_ylim(ylim)
+        #self.ax_spectrum.set_ylim(1.6) doesnt work I think-Pranav
         self.draw()
         return None
         
@@ -581,8 +583,8 @@ class SMHSpecDisplay(mpl.MPLWidget):
             # TODO how to deal with syntheses?
             # TODO need to know 
             x = np.nan
-        self._lines["transitions_center_main"].set_data([x, x], [0, 1.2])
-        self._lines["transitions_center_residual"].set_data([x, x], [0, 1.2])
+        self._lines["transitions_center_main"].set_data([x, x], [0, 1.6])
+        self._lines["transitions_center_residual"].set_data([x, x], [0, 1.6])
         
     def _plot_masks(self):
         if self.session is None: return False
