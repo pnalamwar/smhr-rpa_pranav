@@ -773,7 +773,7 @@ class RVTab(QtGui.QWidget):
         Correct the radial velocity of the observed spectra.
         """
         if "rv_applied" in  self.parent.session.metadata["rv"]:
-            rv_diff = np.float(self.rv_applied.text()) + self.parent.session.metadata["rv"]["rv_applied"]
+            rv_diff = np.float64(self.rv_applied.text()) + self.parent.session.metadata["rv"]["rv_applied"]
         else:
             rv_diff = 0.0
         
