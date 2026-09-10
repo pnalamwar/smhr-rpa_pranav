@@ -144,7 +144,7 @@ def make_snr_plot(normalized_spectrum, figure=None):
 
 def make_synthesis_plot(plotdata, default_err=0.1,
                         plot_resid=True, plot_data_err=True,
-                        xlim=None, ylim=(0,1.6), r_ylim=(-.1,.1),
+                        xlim=None, ylim=(0,2.0), r_ylim=(-.1,.1),
                         xmajlocator=1, ymajlocator=.1, r_ymajlocator=.05,
                         xminlocator=.1, yminlocator=.1, r_yminlocator=.01,
                         fig=None, ax=None, ax_residual=None, figsize=None):

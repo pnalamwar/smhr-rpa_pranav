@@ -159,7 +159,7 @@ def inject_synth_models(session_path, config_path, output_path=None):
 
         # - 'rt_abundances': explicit abundances to pass to RT; leave empty to indicate
         #   "no assumption" (user will set during fits)
-        model.metadata['rt_abundances'] = {}
+        #model.metadata['rt_abundances'] = {}
 
         new_models.append(model)
         print(f"  Created: {elements} | {linelist_path} [{wl_min:.2f}–{wl_max:.2f} Å]")
