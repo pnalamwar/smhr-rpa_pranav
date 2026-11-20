@@ -4,7 +4,7 @@
 
 '''
 Written: ?
-Last updated: 7-27-2026 (modified it for all the lines relevant in HD222925 and more)
+Last updated: 11-20-2026 (modified it for all the lines relevant in HD222925 and have pipeline for M79 data with errors)
 '''
 
 from __future__ import (division, print_function, absolute_import,
@@ -17,7 +17,7 @@ from astropy.io import ascii
 import numpy as np
 
 #hfs_species = [21.1, 25.0, 23.0, 23.1, 27.0, 56.1, 57.1, 63.1]
-hfs_species = [38.0, 38.1, 39.0, 39.1, 40.0, 40.1, 42.0, 42.1, 56.1, 57.1, 58.1, 59.1, 60.1, 62.1, 63.1, 64.1, 66.1, 67.1, 76.0, 82.0, 90.1, 92.1]
+hfs_species = [38.0, 38.1, 39.0, 39.1, 40.0, 40.1, 42.0, 42.1, 56.1, 57.1, 58.1, 59.1, 60.1, 62.1, 63.1, 64.1, 66.1, 67.1, 76.0, 82.0, 90.1]
 
 def fix_lines(linetab,star):
     """
@@ -182,12 +182,13 @@ if __name__=="__main__":
                                 rho_TM=rho_TM, rho_gM=rho_gM, rho_vM=rho_vM)
 
     version_out = "v1" # Submitted version
-    fnames = glob.glob("/home/pnalamwa/actinide_boost_star_studies/*actinide_boost_star_file_synth_with_errors.smh")
+    #fnames = glob.glob("/home/pnalamwa/smhr-rpa/smh/Analysis/M79/cleaned_studies/results/*smh")
+    fnames = ["/home/pnalamwa/smhr-rpa/smh/Analysis/M79/cleaned_studies/results/M79_10336.smh"]#, "/home/pnalamwa/smhr-rpa/smh/Analysis/M79/cleaned_studies/results/M79_96576.smh", "/home/pnalamwa/smhr-rpa/smh/Analysis/M79/cleaned_studies/results/M79_75904.smh", "/home/pnalamwa/smhr-rpa/smh/Analysis/M79/cleaned_studies/results/M79_22336.smh"]
     print(fnames)
     all_lines = []
     all_abunds = []
     for fname in fnames:
-        name = os.path.basename(fname)[:-11]
+        name = os.path.basename(fname).split('.')[0]
         print(name)
         session = Session.load(fname)
         
@@ -228,13 +229,13 @@ if __name__=="__main__":
         linetab = fix_lines(linetab,name)
         linetab = fix_o_loggf(name, linetab) # do it again for the upper limits; defined in a way that's fine
         
-        linetab.write("/home/pnalamwa/actinide_boost_star_studies/line_data/{}_lines_{}.txt".format(name,version_out), overwrite=True, format="ascii.fixed_width_two_line")
-        summarytab.write("/home/pnalamwa/actinide_boost_star_studies/abund_data/{}_abunds_{}.txt".format(name,version_out), overwrite=True, format="ascii.fixed_width_two_line")
+        linetab.write("/home/pnalamwa/smhr-rpa/smh/Analysis/M79/cleaned_studies/results/line_data/{}_lines_{}.txt".format(name,version_out), overwrite=True, format="ascii.fixed_width_two_line")
+        summarytab.write("/home/pnalamwa/smhr-rpa/smh/Analysis/M79/cleaned_studies/results/abund_data/{}_abunds_{}.txt".format(name,version_out), overwrite=True, format="ascii.fixed_width_two_line")
         linetab["star"] = name
         summarytab["star"] = name
         all_lines.append(linetab)
         all_abunds.append(summarytab)
     all_lines = astropy.table.vstack(all_lines)
     all_abunds = astropy.table.vstack(all_abunds)
-    all_lines.write("/home/pnalamwa/actinide_boost_star_studies/line_data_{}.txt".format(version_out), format="ascii.fixed_width_two_line", overwrite=True)
-    all_abunds.write("/home/pnalamwa/actinide_boost_star_studies/abund_data_{}.txt".format(version_out), format="ascii.fixed_width_two_line", overwrite=True)
+    all_lines.write("/home/pnalamwa/smhr-rpa/smh/Analysis/M79/cleaned_studies/results/line_data_{}.txt".format(version_out), format="ascii.fixed_width_two_line", overwrite=True)
+    all_abunds.write("/home/pnalamwa/smhr-rpa/smh/Analysis/M79/cleaned_studies/results/abund_data_{}.txt".format(version_out), format="ascii.fixed_width_two_line", overwrite=True)

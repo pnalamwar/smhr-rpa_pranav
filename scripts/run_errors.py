@@ -12,26 +12,27 @@ from smh import Session
 
 '''
 Written: 4-11-2025
-Last Updated: 7-27-2026 (updated for specifically actinide boost star)
+Last Updated: 11-18-2026 (updated for specifically M79 star)
 
 This code will go througha list of .smh files and set the systematic and statistical uncertainties in the stellar parameters. Then it propagates the errors to the abundances of every spectral model available
 This code is designed to be run before make_abun_tables.py that will actually do some last minute corrections and produce an ascii table of abundances with errors!
 '''
 
 if __name__=="__main__":
-    smh_fnames = glob.glob("/home/pnalamwa/actinide_boost_star_studies/*actinide_boost_star_file_synth_with_errors.smh")
-    
+    smh_fnames = glob.glob("/home/pnalamwa/smhr-rpa/smh/Analysis/M79/cleaned_studies/results/*.smh")
+    error_file = pd.read_csv('/home/pnalamwa/general_GC_analysis/M79/M79_derived_data/shortened_M79_stellar_params_with_errors_for_actual_GHOST_data.csv')
+
     #fname = sys.argv[1]
-   # newfname = sys.argv[2]
-   # assert not os.path.exists(newfname), f"{newfname} already exists! Stopping..."
+    #newfname = sys.argv[2]
+    #assert not os.path.exists(newfname), f"{newfname} already exists! Stopping..."
     #eTeff = float(sys.argv[2])
     #elogg = float(sys.argv[3])
     #evt = float(sys.argv[4])
     #eMH = float(sys.argv[5])
-    #assert os.path.exists(fname)
+    #assert os.path.exists(fname)error_file = pd.read_csv('/home/pnalamwa/CRC_codes_data/M5_Star_Data/final_stars_with_errors_with_R9R21.csv
     #smh_fnames = [fname]
 
-    for fname in smh_fnames:
+    for fname in smh_fnames[0:5]:
         print("Processing {}".format(fname))
         start = time.time()
         #newfname = fname.replace("syntheses","errors")
@@ -43,10 +44,23 @@ if __name__=="__main__":
         #session.stellar_parameter_uncertainty_analysis(systematic_errors=[50, 0.15, 0.10, 0.05])
         #eTeff, elogg, evt, eMH = session.stellar_parameters_staterr
 
-        dteff = 45
-        dlogg = 0.145
-        dvt = 0.052
-        dfeh = 0.031
+        
+        #find the stellar parameter errors by associating it with the name of the star!
+        star_name = fname.split('.')[0].split('/')[-1]
+        print('Star name is: ', star_name)
+
+        index_star = error_file[error_file['Shortened_Names'] == star_name].index[0]
+        print('star name is:', star_name, 'and star index is : ', index_star)
+
+        dteff = error_file.iloc[index_star]['T_eff_error']
+        dlogg = error_file.iloc[index_star]['Log(g)_error']
+        dvt = error_file.iloc[index_star]['xi_error']
+        dfeh = 0.0
+
+        #dteff = 83
+        #dlogg = 0.039
+        #dvt = 0.023
+        #dfeh = 0.00
 
         print('\n Stellar parameter errors are: ', dteff, dlogg, dvt, dfeh, '\n') 
 

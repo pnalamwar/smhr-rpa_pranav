@@ -795,7 +795,7 @@ def process_session_uncertainties_lines(session, rhomat, minerr=0.001):
         # Estimate systematic error s
         s = s_old = 0.
         #s_max = 2.
-        s_max = 3. # Updated to a larger value because it was not always converging.
+        s_max = 5. # Updated to a larger value because it was not always converging.
         delta = struct2array(t["e_Teff","e_logg","e_vt","e_MH"].as_array())
         ex = t["e_stat"]
         for i in range(100):
